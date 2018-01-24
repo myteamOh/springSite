@@ -37,7 +37,7 @@ $(function() {
 			/* 글 저장을 위한 Post 방식의 Ajax 연동 처리 */
 			$.ajax({
 				url : insertUrl, // 전송 url
-				type : "pose", // 전송 시 method 방식
+				type : "post", // 전송 시 method 방식
 				headers : {
 					"Content-Type":"application/json",
 					"X-HTTP-Method-Override":"POST"
@@ -133,7 +133,7 @@ $(function() {
 	});
 	
 	/* 글 삭제를 위한 Ajax 연동 처리 */
-	$(document).on("click", ".delete_btn", fnction() {
+	$(document).on("click", ".delete_btn", function() {
 		$(".reset_btn").click();
 		var currLi = $(this).parents("li");
 		replyNum = currLi.attr("data-num");
@@ -320,8 +320,8 @@ function dataReset() {
 						type="button" id="replyInsert" value="저장하기">
 				</div>
 				<div>
-				<label for="r_content">덧글내용</label>
-				<textarea name="r_content" id="r_content"></textarea>
+					<label for="r_content">덧글내용</label>
+					<textarea name="r_content" id="r_content"></textarea>
 				</div>
 			</form>
 		</div>
