@@ -61,8 +61,7 @@ function chkData(item, msg) {
 	}
 }
 
-functionchkFile(item)
-{
+function chkFile(item) {
 	/*
 	 * 배열내의 값을 찾아서 인덱스를 반환(요소가 없을 경우 -1 반환) jQuery.inArray(찾을 값, 검색 대상의 배열)
 	 */

@@ -31,9 +31,10 @@
 			} else if (!chkSubmit($('#b_pwd'), "비밀번호를")) {
 				return;
 			} else {
-				if ($('#file').val()!="" ){
-					if(!chkFile($('#file')))
+				if ($('#file').val() != "") {
+					if (!chkFile($('#file'))) {
 						return;
+					}
 				}
 				$("#f_writeForm").attr({
 					"method" : "POST",
