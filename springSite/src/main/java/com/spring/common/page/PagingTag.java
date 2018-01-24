@@ -72,8 +72,8 @@ public class PagingTag extends TagSupport {
 
 		if (total % list_size != 0) {
 			lastPage = lastPage + 1;
-			currentLast = (currentLast > lastPage) ? lastPage : currentLast;
 		}
+		currentLast = (currentLast > lastPage) ? lastPage : currentLast;
 
 		ret += " <div class='paginate'> ";
 
@@ -87,7 +87,7 @@ public class PagingTag extends TagSupport {
 			ret += " <a href=\"javascript:goPage('" + prevFirst
 					+ "');\"><span><img src='/resources/images/common/btn_paginate_prev.gif' alt='이전'/></span></a> ";
 		} else {
-			ret += " <span><img src='resources/images/common/btn_paginate_prev.gif' alt='이전' /></span> ";
+			ret += " <span><img src='/resources/images/common/btn_paginate_prev.gif' alt='이전' /></span> ";
 		}
 
 		for (int j = currentFirst; j < currentFirst + page_size && j <= lastPage; j++) {
@@ -109,7 +109,7 @@ public class PagingTag extends TagSupport {
 
 		if (page < lastPage) {
 			ret += " <a href=\"javascript:goPage('" + lastPage
-					+ "'\"><span><img src='/resources/images/common/btn_pageinate_last.gif' alt='마지막' /></span></a> ";
+					+ "')\"><span><img src='/resources/images/common/btn_paginate_last.gif' alt='마지막' /></span></a> ";
 		} else {
 			ret += " <span><img src='/resources/images/common/btn_paginate_last.gif' alt='마지막' /></span> ";
 		}
