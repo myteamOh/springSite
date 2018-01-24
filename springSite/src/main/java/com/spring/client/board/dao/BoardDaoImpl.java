@@ -22,6 +22,12 @@ public class BoardDaoImpl implements BoardDao {
 
 	}
 
+	// 전체 레코드 건수 구현 (추가)
+	@Override
+	public int boardListCnt(BoardVO bvo) {
+		return (Integer) session.selectOne("boardListCnt");
+	}
+
 	// 글입력 구현
 	@Override
 	public int boardInsert(BoardVO bvo) {

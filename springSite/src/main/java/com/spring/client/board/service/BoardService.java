@@ -7,6 +7,8 @@ import com.spring.client.board.vo.BoardVO;
 public interface BoardService {
 
 	public List<BoardVO> boardList(BoardVO bvo);
+	// 추가
+	public int boardListCnt(BoardVO bvo);
 
 	public int boardInsert(BoardVO bvo);
 
