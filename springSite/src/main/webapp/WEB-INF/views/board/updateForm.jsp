@@ -18,16 +18,16 @@
 		/* 수정 버튼 클릭 시 처리 이벤트 */
 		$("#boardUpdateBtn").click(function() {
 			//입력값 체크
-			if (!chkSubmit($('#b_title'), "제목을"))
+			if (!chkSubmit($('#b_title'), "제목을")) {
 				return;
-			else if (!chkSubmit($('b_content'), "작성할 내용을"))
+			} else if (!chkSubmit($('#b_content'), "작성할 내용을")) {
 				return;
-			else {
+			} else {
 				$("#f_writeForm").attr({
 					"method" : "POST",
 					"action" : "/board/boardUpdate.do"
 				});
-				$("f_writeForm").submit();
+				$("#f_writeForm").submit();
 			}
 		});
 
@@ -43,6 +43,7 @@
 		<div class="contentTit">
 			<h3>게시판 글수정</h3>
 		</div>
+
 		<div class="contentTB">
 			<form id="f_writeForm" name="f_writeForm">
 				<input type="hidden" id="b_num" name="b_num"
@@ -83,7 +84,10 @@
 				</table>
 			</form>
 		</div>
+		<div class="contentBtn">
+			<input type="button" value="수정" id="boardUpdateBtn"> <input
+				type="button" value="목록" id="boardListBtn">
+		</div>
 	</div>
-
 </body>
 </html>

@@ -89,7 +89,7 @@
 			<h3>게시판 상세보기</h3>
 		</div>
 		<form name="f_data" id="f_data" method="post">
-			<input type="hidden" name="b_name" value="${detail.b_num}">
+			<input type="hidden" name="b_num" value="${detail.b_num}">
 		</form>
 
 		<!-- ========= 비밀번호 확인 버튼 및 버튼 추가 시작 ====== -->

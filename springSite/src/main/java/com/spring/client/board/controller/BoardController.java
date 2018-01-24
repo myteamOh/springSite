@@ -139,7 +139,7 @@ public class BoardController {
 		logger.info("pwdConfirm 호출 성공");
 		String value = "";
 
-		// 아래 변수에는 입력 성곡에 대한 상태값 저장(1 or 0)
+		// 아래 변수에는 입력 성공에 대한 상태값 저장(1 or 0)
 		int result = boardService.pwdConfirm(bvo);
 
 		if (result == 1) {
@@ -159,6 +159,7 @@ public class BoardController {
 	 * 
 	 * @param :
 	 *            b_num
+	 * 
 	 * @return : BoardVO
 	 ***************************************/
 	@RequestMapping(value = "/updateForm.do")

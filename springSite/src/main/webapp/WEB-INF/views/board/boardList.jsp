@@ -210,7 +210,7 @@
 						<c:when test="${not empty boardList}">
 							<c:forEach var="board" items="${boardList}" varStatus="status">
 								<tr class="tac" data-num="${board.b_num}">
-									<td>${count - status.index }</td>
+									<td>${board.b_num }</td>
 									<td class="goDetail tal">${board.b_title}</td>
 									<td>${board.b_date}</td>
 									<td class="name">${board.b_name}</td>
