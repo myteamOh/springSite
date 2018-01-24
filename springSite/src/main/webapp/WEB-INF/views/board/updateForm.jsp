@@ -45,9 +45,13 @@
 		</div>
 
 		<div class="contentTB">
-			<form id="f_writeForm" name="f_writeForm">
+			<form id="f_writeForm" name="f_writeForm"
+				enctype="multipart/form-data">
 				<input type="hidden" id="b_num" name="b_num"
-					value="${updateData.b_num}" />
+					value="${updateData.b_num}" /> <input type="hidden" name="b_file"
+					id="b_file" value="${updateData.b_file}" /> <input type="hidden"
+					name="page" id="page" value="${param.page}" /> <input type="hidden"
+					name="pageSize" id="pageSize" value="${param.pageSize}" />
 				<table>
 					<colgroup>
 						<col width="17%">
@@ -79,6 +83,10 @@
 							<td class="ac">비밀번호</td>
 							<td colspan="3"><input type="password" id="b_pwd"
 								name="b_pwd" /><label>수정할 비밀번호를 입력해 주세요</label></td>
+						</tr>
+						<tr>
+							<td class="ac">첨부파일</td>
+							<td colspan="3"><textarea name="b_content" id="b_content">${updateData.b_content}</textarea></td>
 						</tr>
 					</tbody>
 				</table>
