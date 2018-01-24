@@ -10,27 +10,44 @@
 		to_char(b_date, 'yyyy-mm-dd') as b_date FROM spring_board ORDER BY b_num 
 		desc </select> -->
 
+	<sql id="boardCommon">
+		SELECT b_num, b_name, b_title, b_date
+		FROM spring_board
+		<where>
+			<if test="search=='b_title'">
+				<![CDATA[ b_title LIKE '%'||#{keyword}||'%']]>
+			</if>
+			<if test="search=='b_content'">
+				<![CDATA[ b_content LIKE '%'||#{keyword}||'%']]>
+			</if>
+			<if test="search=='b_name'">
+				<![CDATA[ b_name LIKE '%'||#{keyword}||'%']]>
+			</if>
+		</where>
+	</sql>
+
 	<!-- 게시물 전체 조회 -->
 	<select id="boardList" parameterType="board" resultType="board">
 		<!-- Board - boardList -->
-		SELECT b_num, b_name, b_title, to_char(b_date, 'yyyy-mm-dd hh24:mi:ss') AS b_date
+		SELECT b_num, b_name, b_title, to_char(b_date, 'yyyy-mm-dd
+		hh24:mi:ss') AS b_date
 		FROM (
-			SELECT list.*, ROWNUM AS RNUM
-			FROM (
-			SELECT
-			b_num, b_name, b_title, b_date
-			FROM spring_board
-			<where>
-				<if test="search=='b_title'">
+		SELECT list.*, ROWNUM AS RNUM
+		FROM (
+		SELECT
+		b_num, b_name, b_title, b_date
+		FROM spring_board
+		<where>
+			<if test="search=='b_title'">
 				<![CDATA[ b_title LIKE '%'||#{keyword}||'%']]>
-				</if>
-				<if test="search=='b_content'">
+			</if>
+			<if test="search=='b_content'">
 				<![CDATA[ b_content LIKE '%'||#{keyword}||'%']]>
-				</if>
-				<if test="search=='b_name'">
+			</if>
+			<if test="search=='b_name'">
 				<![CDATA[ b_name LIKE '%'||#{keyword}||'%']]>
-				</if>
-			</where>
+			</if>
+		</where>
 
 		<choose>
 			<when test="order_by=='b_num'">
@@ -50,6 +67,24 @@
 			</when>
 		</choose>
 		) list
+		)
+		<where>
+			<if test="start_row != null and start_row != ''">
+				<if test="end_row != null and end_row != ''">
+					RNUM BETWEEN #{start_row} AND #{end_row}
+				</if>
+			</if>
+		</where>
+	</select>
+
+	<select id="boardListCnt" parameterType="board" resultType="int">
+		<!-- Board - boardListCnt -->
+		SELECT NVL(count(1), 0) FROM
+		( SELECT list.*, ROWNUM AS RNUM
+		FROM (
+		<include refid="boardCommon"></include>
+		ORDER BY b_num DESC
+		)list
 		)
 	</select>
 
