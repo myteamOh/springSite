@@ -1,6 +1,9 @@
 package com.spring.client.board.controller;
 
+import java.io.IOException;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.spring.client.board.service.BoardService;
 import com.spring.client.board.vo.BoardVO;
+import com.spring.common.file.FileUploadUtil;
 import com.spring.common.page.Paging;
 import com.spring.common.util.Util;
 
@@ -76,12 +80,22 @@ public class BoardController {
 	 * 글쓰기 구현하기
 	 ***************************************/
 	@RequestMapping(value = "/boardInsert.do", method = RequestMethod.POST)
-	public String boardInsert(@ModelAttribute BoardVO bvo, Model model) {
+	public String boardInsert(@ModelAttribute BoardVO bvo, Model model, HttpServletRequest request)
+			throws IllegalStateException, IOException {
 
 		logger.info("boardInsert 호출 성공");
 
+		// 확인 후 주석 처리
+		logger.info("fileName : " + bvo.getFile().getOriginalFilename());
+		logger.info("b_title : " + bvo.getB_title());
+
 		int result = 0;
 		String url = "";
+
+		if (bvo.getFile() != null) {
+			String b_file = FileUploadUtil.fileUpload(bvo.getFile(), request, "board");
+			bvo.setB_file(b_file);
+		}
 
 		result = boardService.boardInsert(bvo);
 
@@ -185,13 +199,27 @@ public class BoardController {
 	 *            BoardVO
 	 ***************************************/
 	@RequestMapping(value = "/boardUpdate.do", method = RequestMethod.POST)
-	public String boardUpdate(@ModelAttribute BoardVO bvo) {
+	public String boardUpdate(@ModelAttribute BoardVO bvo, HttpServletRequest request)
+			throws IllegalStateException, IOException {
 
 		logger.info("boardUpdate 호출 성공");
 
 		int result = 0;
 		String url = "";
+		String b_file = "";
 
+		if (!bvo.getFile().isEmpty()) {
+			logger.info("========== file = " + bvo.getFile().getOriginalFilename());
+			if (!bvo.getB_file().isEmpty()) {
+				FileUploadUtil.fileDelete(bvo.getB_file(), request);
+			}
+			b_file = FileUploadUtil.fileUpload(bvo.getFile(), request, "board");
+			bvo.setB_file(b_file);
+		} else {
+			logger.info("첨부파일 없음");
+			bvo.setB_file("");
+		}
+		logger.info("=========== b_file = " + bvo.getB_file());
 		result = boardService.boardUpdate(bvo);
 
 		if (result == 1) {
@@ -212,13 +240,17 @@ public class BoardController {
 	 * @throws IOException
 	 ***************************************/
 	@RequestMapping(value = "/boardDelete.do")
-	public String boardDelete(@ModelAttribute BoardVO bvo) {
+	public String boardDelete(@ModelAttribute BoardVO bvo, HttpServletRequest request) throws IOException {
 
 		logger.info("boardDelete 호출 성공");
 
 		// 아래 변수에는 입력 성공에 대한 상태값 담습니다.(1 or 0)
 		int result = 0;
 		String url = "";
+
+		if (!bvo.getB_file().isEmpty()) {
+			FileUploadUtil.fileDelete(bvo.getB_file(), request);
+		}
 
 		result = boardService.boardDelete(bvo.getB_num());
 
