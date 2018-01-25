@@ -54,3 +54,31 @@ CREATE SEQUENCE SPRING_REPLY_SEQ
 START WITH 1
 INCREMENT BY 1
 NOCYCLE;
+
+-- 갤러리 테이블 생성 by.moon (feat.OhGee)
+CREATE TABLE spring_gallery(
+   g_num number not null,
+   g_name varchar2(10) not null,
+   g_subject varchar2(50 char) not null,
+   g_content varchar2(100 char) not null,
+   g_thumb varchar2(100) not null,
+   g_file varchar2(100) not null,
+   g_pwd varchar2(18) not null,
+   g_date date default SYSDATE,
+   CONSTRAINT spring_gallerty_pk PRIMARY KEY(g_num)
+);
+
+-- 갤러리 코멘트 달기 by.moon
+COMMENT ON TABLE spring_gallery is '갤러리 게시판 정보';
+COMMENT ON COLUMN spring_gallery.g_num is '갤러리게시판 순번';
+COMMENT ON COLUMN spring_gallery.g_name is '갤러리게시판 작성자';
+COMMENT ON COLUMN spring_gallery.g_subject is '갤러리게시판 제목';
+COMMENT ON COLUMN spring_gallery.g_content is '갤러리게시판 내용';
+COMMENT ON COLUMN spring_gallery.g_thumb is '갤러리게시판 썸네일 이미지';
+COMMENT ON COLUMN spring_gallery.g_file is '갤러리게시판 이미지';
+COMMENT ON COLUMN spring_gallery.g_pwd is '갤러리게시판 비밀번호';
+COMMENT ON COLUMN spring_gallery.g_date is '갤러리게시판 등록일';
+
+-- 갤러리 시퀀스 생성 by.moon
+CREATE SEQUENCE spring_gallery_seq;
+
