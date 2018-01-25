@@ -21,10 +21,36 @@
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources 
 		in the /WEB-INF/views directory -->
-	<beans:bean
+	<!-- ViewResolver에 설정 부분을 주석처리한다. -->
+	<!-- <beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"> 
+		<beans:property name="prefix" value="/WEB-INF/views/" /> <beans:property 
+		name="suffix" value=".jsp" /> </beans:bean> -->
+
+	<!-- 타일즈(tiles) 설정 -->
+	<beans:bean id="tilesConfigurer"
+		class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
+		<beans:property name="definitions">
+			<beans:list>
+				<beans:value>/WEB-INF/tiles/tiles-setting.xml</beans:value>
+				<!-- 관리자 페이지 추가 시 추석 해제 -->
+				<!-- <beans:value>/WEB-INF/tiles/admin-setting.xml</beans:value> -->
+			</beans:list>
+		</beans:property>
+	</beans:bean>
+
+	<beans:bean id="tilesViewResolver"
+		class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+		<beans:property name="viewClass"
+			value="org.springframework.web.servlet.view.tiles3.TilesView"></beans:property>
+		<!-- 우선순위 설정 -->
+		<beans:property name="order" value="1"></beans:property>
+	</beans:bean>
+
+	<beans:bean id="viewResolver"
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<beans:property name="prefix" value="/WEB-INF/views/" />
-		<beans:property name="suffix" value=".jsp" />
+		<beans:property name="prefix" value="/WEB-INF/views/"></beans:property>
+		<beans:property name="suffix" value=".jsp"></beans:property>
+		<beans:property name="order" value="2"></beans:property>
 	</beans:bean>
 
 	<context:component-scan base-package="com.spring.**.**.**" />
