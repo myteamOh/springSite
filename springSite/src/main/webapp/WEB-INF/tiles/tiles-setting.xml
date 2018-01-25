@@ -3,6 +3,7 @@
 "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 
 <tiles-definitions>
+
 	<definition name="intro"
 		template="/WEB-INF/views/template/client/mainLayout.jsp">
 		<put-attribute name="title" value="000 사이트" />
@@ -11,6 +12,7 @@
 		<put-attribute name="footer"
 			value="/WEB-INF/views/template/client/footer.jsp" />
 	</definition>
+
 	<definition name="content"
 		template="/WEB-INF/views/template/client/contentLayout.jsp">
 		<put-attribute name="title" value="000 사이트" />
@@ -20,11 +22,19 @@
 		<put-attribute name="footer"
 			value="/WEB-INF/views/template/client/footer.jsp" />
 	</definition>
+
 	<definition name="board/*" extends="content">
 		<put-attribute name="title" value="기본 게시판" />
 		<put-attribute name="body" value="/WEB-INF/views/board/{1}.jsp" />
 	</definition>
+
 	<definition name="replies/*" extends="content">
 		<put-attribute name="body" value="/WEB-INF/views/board/reply.jsp" />
 	</definition>
+
+	<definition name="gallery/*" extends="content">
+		<put-attribute name="title" value="갤러리 게시판"></put-attribute>
+		<put-attribute name="body" value="/WEB-INF/views/gallery/{1}.jsp"></put-attribute>
+	</definition>
+
 </tiles-definitions> 
