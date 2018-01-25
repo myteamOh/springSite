@@ -38,7 +38,7 @@ public class GalleryController {
 	 * 갤러리 목록 구현하기
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/galleryData")
+	@RequestMapping(value = "/galleryData", produces = "text/plain;charset=UTF-8")
 	public String galleryData(ObjectMapper mapper) {
 
 		logger.info("galleryData 호출 성공");
