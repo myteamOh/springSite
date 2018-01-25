@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spring.client.gallery.dao.GalleryDao">
+
+	<!-- 갤러리 기본 조회 -->
+	<select id="galleryList" resultType="gallery">
+		<!-- gallery - galleryList -->
+		SELECT
+		g_num, g_name, g_subject, g_content, g_thumb, g_file,
+		to_char(g_date, 'yyyy.mm.dd') AS g_date
+		FROM spring_gallery
+		ORDER BY
+		g_num DESC
+	</select>
+
+	<!-- 갤러리 등록 -->
+	<insert id="galleryInsert" parameterType="gallery">
+		<!-- gallery - galleryInsert -->
+		<selectKey keyProperty="g_num" resultType="int" order="BEFORE">
+			SELECT spring_gallery_seq.nextval FROM DUAL
+		</selectKey>
+		INSERT INTO
+		spring_gallery (g_num, g_name, g_subject, g_content,
+		g_thumb, g_file, g_pwd)
+		VALUES(#{g_num}, #{g_name}, #{g_subject},
+		#{g_content}, #{g_thumb}, #{g_file}, #{g_pwd})
+	</insert>
+
+</mapper>

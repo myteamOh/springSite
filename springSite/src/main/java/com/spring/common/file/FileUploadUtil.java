@@ -1,11 +1,14 @@
 package com.spring.common.file;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
+import org.imgscalr.Scalr;
 import org.springframework.web.multipart.MultipartFile;
 
 public class FileUploadUtil {
@@ -62,5 +65,35 @@ public class FileUploadUtil {
 			result = fileDelete.delete();
 		}
 		logger.info("파일 삭제 여부(true/false) : " + result);
+	}
+	
+	/* 파일 Thumbnail 생성 메서드 */
+	public static String makeThumbnail(String fileName, HttpServletRequest request) throws Exception {
+
+		String dirName = fileName.substring(0, fileName.indexOf("_"));
+
+		// 이미지가 존재하는 폴더 추출
+		String imgPath = request.getSession().getServletContext().getRealPath("/uploadStorage/" + dirName);
+
+		// 추출된 폴더의 실제 경로(물리적 위치: C:\...)
+		File fileAdd = new File(imgPath, fileName);
+		logger.info("원본 이미지 파일(fileAdd) : " + fileAdd);
+
+		BufferedImage sourceIma = ImageIO.read(fileAdd);
+		BufferedImage destImg = Scalr.resize(sourceIma, Scalr.Method.AUTOMATIC, Scalr.Mode.FIT_TO_HEIGHT, 133);
+		// resize(대상[BufferedImage 타입], 원본비율, 높이 또는 너비, 크기)
+
+		String thumbnailName = "thumbnail_" + fileName;
+		String docRoot = imgPath + "/thumbnail";
+		makeDir(docRoot);
+
+		File newFile = new File(docRoot, thumbnailName);
+		logger.info("업로드할 파일(newFile) : " + newFile);
+
+		String formatName = fileName.substring(fileName.lastIndexOf(".") + 1);
+		logger.info("확장자(formatName) : " + formatName);
+
+		ImageIO.write(destImg, formatName, newFile);
+		return thumbnailName;
 	}
 }
