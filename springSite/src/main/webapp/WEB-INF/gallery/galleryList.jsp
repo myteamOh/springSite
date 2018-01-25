@@ -6,12 +6,17 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport"
+	content="width=device-width,  initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 <title>갤러리 리스트</title>
 
 <link rel="stylesheet" type="text/css"
-	href="/resources/include/css/common.css">
+	href="/resources/include/css/common.css" >
 <script type="text/javascript"
 	src="/resources/include/js/jquery-1.12.4.min.js"></script>
+<script type="text/javascript"
+	src="/resources/include/js/jquery.form.min.js"></script>
 <script type="text/javascript" src="/resources/include/js/common.js"></script>
 
 <link rel="stylesheet" type="text/css"
@@ -38,7 +43,7 @@
 								return;
 							} else if (!checkForm($('#file'), "등록할 이미지를")) {
 								return;
-							} else if (!checkFile($('#file'))) {
+							} else if (!chkFile($('#file'))) {
 								return;
 							} else if (!checkForm($('#g_pwd'), "비밀번호를")) {
 								return;
@@ -49,6 +54,7 @@
 													url : "/gallery/galleryInsert.do",
 													type : "post",
 													enctype : "multipart/form-data",
+													dataType : "text",
 													error : function() {
 														alert('시스템 오류 입니다. 관리자에게 문의 하세요');
 													},
@@ -152,7 +158,7 @@
 		panel_body.addClass("panel-collapse collapse");
 
 		if (index == 0) {
-			panel_body_addClass("in");
+			panel_body.addClass("in");
 		}
 
 		panel_body.attr({
@@ -171,7 +177,7 @@
 		// 메서드 확인 시 아래 경로로 확인
 		// lightbox_a.attr({"href":"/resources/imagesthumbnail/"+g_file, "data-lightbox":"roadtrip"});
 		lightbox_a.attr({
-			"href" : "uploadStorage/gallery/" + g_file,
+			"href" : "/uploadStorage/gallery/" + g_file,
 			"data-lightbox" : "roadtrip"
 		});
 

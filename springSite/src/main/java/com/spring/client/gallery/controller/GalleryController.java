@@ -38,7 +38,7 @@ public class GalleryController {
 	 * 갤러리 목록 구현하기
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/gallerydata")
+	@RequestMapping(value = "/galleryData")
 	public String galleryData(ObjectMapper mapper) {
 
 		logger.info("galleryData 호출 성공");
@@ -61,7 +61,7 @@ public class GalleryController {
 	 * @throws Exception
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/galleryInsert", method = RequestMethod.POST, produces="text/plain; charset=UTF-8")
+	@RequestMapping(value = "/galleryInsert", method = RequestMethod.POST, produces = "text/plain; charset=UTF-8")
 	public String galleryInsert(@ModelAttribute GalleryVO gvo, HttpServletRequest request) throws Exception {
 
 		logger.info("galleryInsert 호출 성공");
