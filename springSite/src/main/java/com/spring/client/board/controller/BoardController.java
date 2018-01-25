@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.spring.client.board.service.BoardService;
@@ -263,4 +264,21 @@ public class BoardController {
 		return "redirect:" + url;
 
 	}
+
+	/*************** 추가 ****************/
+	/**************************************************
+	 * 글 삭제전 댓글 개수 구현하기
+	 * 
+	 * @param int
+	 **************************************************/
+	@ResponseBody
+	@RequestMapping(value = "/replyCnt.do")
+	public String replyCnt(@RequestParam("b_num") int b_num) {
+		logger.info("replyCnt 호출 성공");
+
+		int result = 0;
+		result = boardService.replyCnt(b_num);
+		return result + "";
+	}
+
 }

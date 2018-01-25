@@ -7,6 +7,7 @@ import com.spring.client.board.vo.BoardVO;
 public interface BoardService {
 
 	public List<BoardVO> boardList(BoardVO bvo);
+
 	// 추가
 	public int boardListCnt(BoardVO bvo);
 
@@ -19,5 +20,8 @@ public interface BoardService {
 	public int boardUpdate(BoardVO bvo);
 
 	public int boardDelete(int b_num);
+	
+	/*************** 추가 ****************/
+	public int replyCnt(int b_num);
 
 }

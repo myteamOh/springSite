@@ -9,6 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.spring.client.board.dao.BoardDao;
 import com.spring.client.board.vo.BoardVO;
+import com.spring.client.reply.dao.ReplyDao;
+import com.spring.client.reply.vo.ReplyVO;
 
 @Service
 @Transactional
@@ -18,6 +20,8 @@ public class BoardServiceImpl implements BoardService {
 
 	@Autowired
 	private BoardDao boardDao;
+	@Autowired
+	private ReplyDao replyDao;
 
 	// 글목록 구현
 	@Override
@@ -116,6 +120,23 @@ public class BoardServiceImpl implements BoardService {
 
 		return result;
 
+	}
+	
+	/*************** 추가 ****************/
+	// 해당 게시물의 댓글 존재 여부 확인 댓글이
+	// 존재하면 댓글수를 반환하고 존재하지 않으면 0을 반환
+	@Override
+	public int replyCnt(int b_num) {
+		// TODO Auto-generated method stub
+		// 댓글의 개수 구하기
+		int result = 0;
+		List<ReplyVO> list = replyDao.replyList(b_num);
+		if (!list.isEmpty()) {
+			result = list.size();
+		} else {
+			result = 0;
+		}
+		return result;
 	}
 
 }
