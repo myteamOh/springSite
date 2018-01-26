@@ -68,7 +68,7 @@ public class BoardController {
 	/***************************************
 	 * 글쓰기 폼 출력하기
 	 ***************************************/
-	@RequestMapping(value = "/writeForm.do")
+	@RequestMapping(value = "/writeForm")
 	public String writeForm() {
 
 		logger.info("writeFrom 호출 성공");
@@ -80,7 +80,7 @@ public class BoardController {
 	/***************************************
 	 * 글쓰기 구현하기
 	 ***************************************/
-	@RequestMapping(value = "/boardInsert.do", method = RequestMethod.POST)
+	@RequestMapping(value = "/boardInsert", method = RequestMethod.POST)
 	public String boardInsert(@ModelAttribute BoardVO bvo, Model model, HttpServletRequest request)
 			throws IllegalStateException, IOException {
 
@@ -118,7 +118,7 @@ public class BoardController {
 	/***************************************
 	 * 글 상세보기 구현
 	 ***************************************/
-	@RequestMapping(value = "/boardDetail.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/boardDetail", method = RequestMethod.GET)
 	public String boardDetail(@ModelAttribute BoardVO pvo, Model model) {
 
 		logger.info("boardDetail 호출 성공");
@@ -148,7 +148,7 @@ public class BoardController {
 	 *         실제 컨텐트 타입을 보장.
 	 ******************************************************/
 	@ResponseBody
-	@RequestMapping(value = "/pwdConfirm.do", method = RequestMethod.POST, produces = "text/plain; charset=UTF-8")
+	@RequestMapping(value = "/pwdConfirm", method = RequestMethod.POST, produces = "text/plain; charset=UTF-8")
 	public String pwdConfirm(@ModelAttribute BoardVO bvo) {
 
 		logger.info("pwdConfirm 호출 성공");
@@ -170,7 +170,7 @@ public class BoardController {
 	}
 
 	/***************************************
-	 * 글수정 폼 출력사기
+	 * 글수정 폼 출력하기
 	 * 
 	 * @param :
 	 *            b_num
@@ -199,7 +199,7 @@ public class BoardController {
 	 * @param :
 	 *            BoardVO
 	 ***************************************/
-	@RequestMapping(value = "/boardUpdate.do", method = RequestMethod.POST)
+	@RequestMapping(value = "/boardUpdate", method = RequestMethod.POST)
 	public String boardUpdate(@ModelAttribute BoardVO bvo, HttpServletRequest request)
 			throws IllegalStateException, IOException {
 
@@ -226,10 +226,11 @@ public class BoardController {
 		if (result == 1) {
 			// url="/board/boardList.do"; // 수정 후 목록으로 이동
 			// 아래 url은 수정 후 상세 페이지로 이동
-			url = "/board/boardDetail.do?b_num=" + bvo.getB_num();
-		} else {
-			url = "/board/updateForm.do??b_num=" + bvo.getB_num();
-		}
+			url = "/board/boardDetail.do?b_num=" + bvo.getB_num() + "&page=" + bvo.getPage() + "&pageSize="
+					+ bvo.getPageSize();
+		} /*
+			 * else { url = "/board/updateForm.do??b_num=" + bvo.getB_num(); }
+			 */
 
 		return "redirect:" + url;
 
@@ -240,7 +241,7 @@ public class BoardController {
 	 * 
 	 * @throws IOException
 	 ***************************************/
-	@RequestMapping(value = "/boardDelete.do")
+	@RequestMapping(value = "/boardDelete")
 	public String boardDelete(@ModelAttribute BoardVO bvo, HttpServletRequest request) throws IOException {
 
 		logger.info("boardDelete 호출 성공");
@@ -256,9 +257,10 @@ public class BoardController {
 		result = boardService.boardDelete(bvo.getB_num());
 
 		if (result == 1) {
-			url = "/board/boardList.do";
+			url = "/board/boardList.do?page=" + bvo.getPage() + "&pageSize=" + bvo.getPageSize();
 		} else {
-			url = "/board/boardDetail.do?b_num=" + bvo.getB_num();
+			url = "/board/boardDetail.do?b_num=" + bvo.getB_num() + "&page=" + bvo.getPage() + "&pageSize="
+					+ bvo.getPageSize();
 		}
 
 		return "redirect:" + url;
