@@ -4,9 +4,11 @@
 		select userId, userPw, userName from spring_member where userId =
 		#{userId}
 	</select>
-	<select id="loginSelect" parameterType="login" resultType="login"> /*
-		로그인 처리 쿼리 */ select userId, userPw, userName from spring_member where
-		userId = #{userId} and userPw = #{userPw}
+	<select id="loginSelect" parameterType="login" resultType="login">
+		<!-- 로그인 처리 쿼리 -->
+		select userId, userPw, userName from spring_member where
+		userId =
+		#{userId} and userPw = #{userPw}
 	</select>
 	<insert id="loginHistoryInsert" parameterType="login"> insert into
 		login_history( idx, userId, retry, lastFailedLogin,
