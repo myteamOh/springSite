@@ -23,6 +23,10 @@
 			<if test="search=='b_name'">
 				<![CDATA[ b_name LIKE '%'||#{keyword}||'%']]>
 			</if>
+			<if test="search=='b_date'">
+				<![CDATA[ to_char(b_date, 'YYYY-MM-DD') 
+				between #{start_date} and #{end_date} ]]>
+			</if>
 		</where>
 	</sql>
 
@@ -156,5 +160,5 @@
 		WHERE
 		b_num = #{b_num}
 	</delete>
-	
+
 </mapper>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spring.admin.member.dao.AdminMemberDao">
+	<resultMap type="java.util.TreeMap" id="graph" />
+
+	<!-- 회원 기본 조회 <select id="memberList" resultType="member"> SELECT idx, userid, 
+		userpw, username, pinno, joindate, email, phone FROM spring_member </select> -->
+
+	<!-- 회원 기본 조회 (마스킹 처리) -->
+	<select id="memberList" resultType="member">
+		SELECT idx, userpw, pinno,
+		joindate,
+		REGEXP_REPLACE(userid, '.', '*', 4) AS userid,
+		REGEXP_REPLACE(username, '.', '*', 2) AS username,
+		REGEXP_REPLACE(phone, '(\d{3})\-(\d{3,4})\-(\d{4})', '\1-****-\3') AS
+		phone,
+		CONCAT('***', SUBSTR(email, 4, LENGTH(email))) AS email
+		FROM
+		spring_member
+	</select>
+
+	<!-- 회원 연령대 조회 -->
+	<select id="memberAgeList" resultMap="graph">
+		<!-- 년도 기준 나이 -->
+		SELECT COUNT(CASE WHEN <![CDATA[ age < 10 ]]>
+		THEN 1 END) "10세미만",
+		COUNT(CASE WHEN age BETWEEN 10 AND 19 THEN 1 END)
+		"10대",
+		COUNT(CASE WHEN age BETWEEN 20 AND 29 THEN 1 END) "20대",
+		COUNT(CASE WHEN age BETWEEN 30 AND 39 THEN 1 END) "30대",
+		COUNT(CASE
+		WHEN age BETWEEN 40 AND 49 THEN 1 END) "40대",
+		COUNT(CASE WHEN age
+		BETWEEN 50 AND 59 THEN 1 END) "50대",
+		COUNT(CASE WHEN age BETWEEN 60 AND
+		69 THEN 1 END) "60대",
+		COUNT(CASE WHEN age BETWEEN 70 AND 79 THEN 1 END)
+		"70대",
+		COUNT(CASE WHEN <![CDATA[ age >= 80 ]]>
+		THEN 1 END) "80세이상"
+		FROM (
+		SELECT TO_CHAR(sysdate, 'yyyy') -
+		CONCAT(CASE
+		WHEN SUBSTR(pinno, 8, 1) IN ('1','2') THEN '19' ELSE '20' END,
+		SUBSTR(pinno, 1, 2)) AS age FROM spring_member
+		)
+	</select>
+
+	<select id="memberGenderList" resultMap="graph">
+		SELECT COUNT(CASE WHEN
+		SUBSTR(pinno, 8, 1) IN ('1','3') THEN 1 END) "men",
+		COUNT(CASE WHEN
+		SUBSTR(pinno, 8, 1) IN ('2','4') THEN 1 END) "women"
+		FROM spring_member
+	</select>
+
+</mapper>

@@ -10,7 +10,7 @@ public class MemberVO extends LoginVO {
 	private String pinno;
 	private String email;
 	private String phone;
-	private Timestamp joinData;
+	private Timestamp joinDate;
 
 	public String getOldUserPw() {
 		return oldUserPw;
@@ -44,18 +44,18 @@ public class MemberVO extends LoginVO {
 		this.phone = phone;
 	}
 
-	public Timestamp getJoinData() {
-		return joinData;
+	public Timestamp getJoinDate() {
+		return joinDate;
 	}
 
-	public void setJoinData(Timestamp joinData) {
-		this.joinData = joinData;
+	public void setJoinDate(Timestamp joinDate) {
+		this.joinDate = joinDate;
 	}
 
 	@Override
 	public String toString() {
 		return "MemberVO [oldUserPw=" + oldUserPw + ", pinno=" + pinno + ", email=" + email + ", phone=" + phone
-				+ ", joinData=" + joinData + "]";
+				+ ", joinDate=" + joinDate + "]";
 	}
 
 }
